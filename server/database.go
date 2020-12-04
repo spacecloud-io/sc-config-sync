@@ -31,14 +31,14 @@ func HandleDatabaseSync(a *admin.Module) http.HandlerFunc {
 			return
 		}
 
-		token, err := a.CreateToken(ctx, map[string]interface{}{})
+		token, err := a.CreateToken(ctx, map[string]interface{}{"id": "config-sync", "role": "admin"})
 		if err != nil {
 			_ = helpers.Response.SendErrorResponse(ctx, w, http.StatusBadRequest, err.Error())
 			return
 		}
 
 		if err := utils.SyncDatabase(ctx, token, req); err != nil {
-			_ = helpers.Response.SendErrorResponse(ctx, w, http.StatusBadRequest, err.Error())
+			_ = helpers.Response.SendErrorResponse(ctx, w, http.StatusInternalServerError, err.Error())
 			return
 		}
 

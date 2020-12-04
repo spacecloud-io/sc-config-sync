@@ -31,7 +31,7 @@ func (m *Module) CreateToken(ctx context.Context, tokenClaims map[string]interfa
 	}
 
 	// Add expiry of one week
-	claims["exp"] = time.Now().Add(24 * 7 * time.Hour).Unix()
+	claims["exp"] = time.Now().Add(10 * time.Minute).Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token.Header["kid"] = "sc-admin-kid"
