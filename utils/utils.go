@@ -26,10 +26,10 @@ func CreateSpecObject(api, objType string, meta map[string]string, spec interfac
 }
 
 // MakeHTTPRequest gets spec object
-func MakeHTTPRequest(token, method, url string, params map[string]string, vPtr interface{}) error {
+func MakeHTTPRequest(token, method, url string, params map[string]string, body interface{}, vPtr interface{}) error {
 	url = fmt.Sprintf("%s%s", model.GatewayAddr, url)
 
-	reqBody, _ := json.Marshal(map[string]string{})
+	reqBody, _ := json.Marshal(body)
 	req, err := http.NewRequest(method, url, bytes.NewBuffer(reqBody))
 	if err != nil {
 		return err
