@@ -23,11 +23,11 @@ jobs:
             ${{ runner.os }}-go-
 
       - name: Build
-        run: cd sc-config-sync && go build -v .
+        run: go build -v .
       - name: Test
-        run: cd sc-config-sync && go test ./...
+        run: go test ./...
       - name: Lint
         run: |
           curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.26.0
           sudo cp ./bin/golangci-lint $GOPATH/bin/
-          cd sc-config-sync && golangci-lint run -E golint --exclude-use-default=false --timeout 600s ./...
+          golangci-lint run -E golint --exclude-use-default=false --timeout 600s ./...
