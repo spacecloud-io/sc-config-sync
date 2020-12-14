@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "971e3fde-1c2d-4a30-842e-a772ac857327",
+		"name": "SC Config Sync",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Database Sync",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"projectId\":\"test\",\n    \"from\":\"postgres1\",\n    \"to\": {\n        \"conn\": \"postgres://postgres:mysecretpassword@localhost:5432/postgres?sslmode=disable\",\n        \"name\": \"postgres2\",\n        \"dbAlias\": \"postgres2\",\n        \"limit\": 5000\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{base_url}}/db/sync",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"db",
+						"sync"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2460e57a-58b3-4884-840f-2c22f0332e26",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a0fdc7dd-c546-4e94-b3cf-e56a04e315c5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "96fadfbf-d810-4d30-b2cf-baa15227274b",
+			"key": "base_url",
+			"value": "localhost:12000"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
