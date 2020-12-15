@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"projectId\":\"test\",\n    \"from\":\"postgres1\",\n    \"to\": {\n        \"conn\": \"postgres://postgres:mysecretpassword@localhost:5432/postgres?sslmode=disable\",\n        \"name\": \"postgres2\",\n        \"dbAlias\": \"postgres2\",\n        \"limit\": 5000\n    }\n}",
+					"raw": "{\n    \"projectId\": \"test\",\n    \"from\": \"postgres1\",\n    \"to\": {\n        \"conn\": \"postgres://postgres:mysecretpassword@pg-1.db.svc.cluster.local:5432/postgres?sslmode=disable\",\n        \"name\": \"postgres3\",\n        \"dbAlias\": \"postgres3\",\n        \"limit\": 50000,\n        \"driverConf\": {\n            \"maxConn\": 1,\n            \"maxIdleTimeout\": 2,\n            \"minConn\": 3,\n            \"maxIdleConn\": 4\n        }\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -58,7 +58,7 @@
 	],
 	"variable": [
 		{
-			"id": "96fadfbf-d810-4d30-b2cf-baa15227274b",
+			"id": "c37760b6-48bb-4f1d-a869-b55ad73caf25",
 			"key": "base_url",
 			"value": "localhost:12000"
 		}
