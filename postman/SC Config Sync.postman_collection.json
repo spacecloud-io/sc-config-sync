@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"projectId\": \"test\",\n    \"from\": \"postgres1\",\n    \"to\": {\n        \"conn\": \"postgres://postgres:mysecretpassword@pg-1.db.svc.cluster.local:5432/postgres?sslmode=disable\",\n        \"name\": \"postgres3\",\n        \"dbAlias\": \"postgres3\",\n        \"limit\": 50000,\n        \"driverConf\": {\n            \"maxConn\": 1,\n            \"maxIdleTimeout\": 2,\n            \"minConn\": 3,\n            \"maxIdleConn\": 4\n        }\n    }\n}",
+					"raw": "{\n    \"projectId\": \"test\",\n    \"from\": \"postgres1\",\n    \"to\": {\n        \"conn\": \"postgres://postgres:mysecretpassword@pg-1.db.svc.cluster.local:5432/postgres?sslmode=disable\",\n        \"name\": \"postgres3\",\n        \"dbAlias\": \"postgres3\",\n        \"limit\": 50000,\n        \"driverConf\": {\n            \"maxConn\": 50,\n            \"maxIdleTimeout\": 300000,\n            \"minConn\": 10,\n            \"maxIdleConn\": 25\n        }\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
