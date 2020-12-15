@@ -2,16 +2,9 @@ package model
 
 // DBSyncRequest db sync request
 type DBSyncRequest struct {
-	ProjectID string          `json:"projectId"`
-	From      string          `json:"from"` // dbAlias of existing database
-	To        *DatabaseConfig `json:"to"`
-}
-
-// DatabaseConfig stores information of database config
-type DatabaseConfig struct {
-	DbAlias string `json:"dbAlias,omitempty" yaml:"dbAlias" mapstructure:"dbAlias"`
-	DBName  string `json:"name,omitempty" yaml:"name" mapstructure:"name"` // name of the logical database or schema name according to the database type
-	Conn    string `json:"conn,omitempty" yaml:"conn" mapstructure:"conn"`
+	ProjectID string                 `json:"projectId"`
+	From      string                 `json:"from"` // dbAlias of existing database
+	To        map[string]interface{} `json:"to"`
 }
 
 // SpecObject describes the basic structure of config specifications

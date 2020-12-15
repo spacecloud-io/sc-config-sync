@@ -36,8 +36,13 @@ func HandleDatabaseSync(a *admin.Module) http.HandlerFunc {
 			_ = helpers.Response.SendErrorResponse(ctx, w, http.StatusBadRequest, err.Error())
 			return
 		}
+		dbAlias, ok := req.To["dbAlias"]
+		if !ok {
+			_ = helpers.Response.SendErrorResponse(ctx, w, http.StatusBadRequest, "new dbAlias not provided in the request body")
+			return
+		}
 
-		if err := utils.SyncDatabase(ctx, token, req); err != nil {
+		if err := utils.SyncDatabase(ctx, dbAlias.(string), token, req); err != nil {
 			_ = helpers.Response.SendErrorResponse(ctx, w, http.StatusInternalServerError, err.Error())
 			return
 		}

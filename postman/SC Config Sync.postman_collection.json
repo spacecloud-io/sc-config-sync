@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "971e3fde-1c2d-4a30-842e-a772ac857327",
+		"name": "SC Config Sync",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Database Sync",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"projectId\": \"test\",\n    \"from\": \"postgres1\",\n    \"to\": {\n        \"conn\": \"postgres://postgres:mysecretpassword@pg-1.db.svc.cluster.local:5432/postgres?sslmode=disable\",\n        \"name\": \"postgres3\",\n        \"dbAlias\": \"postgres3\",\n        \"limit\": 50000,\n        \"driverConf\": {\n            \"maxConn\": 50,\n            \"maxIdleTimeout\": 300000,\n            \"minConn\": 10,\n            \"maxIdleConn\": 25\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{base_url}}/db/sync",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"db",
+						"sync"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2460e57a-58b3-4884-840f-2c22f0332e26",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a0fdc7dd-c546-4e94-b3cf-e56a04e315c5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "c37760b6-48bb-4f1d-a869-b55ad73caf25",
+			"key": "base_url",
+			"value": "localhost:12000"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

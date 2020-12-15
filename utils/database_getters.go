@@ -11,19 +11,20 @@ import (
 )
 
 // SyncDatabase syncs the config of database
-func SyncDatabase(ctx context.Context, token string, req *model.DBSyncRequest) error {
-	fmt.Println("Tone", token)
+func SyncDatabase(ctx context.Context, dbAlias, token string, req *model.DBSyncRequest) error {
 	specArr := make(model.SpecObjects, 0)
 	specObjs, err := GetDbConfig(token, req.ProjectID, "db-configs", map[string]string{"dbAlias": req.From})
 	if err != nil {
 		return err
 	}
 	for _, specObject := range specObjs {
-		specObject.Meta["dbAlias"] = req.To.DbAlias
-		specObject.Meta["id"] = fmt.Sprintf("%s-config", req.To.DbAlias)
+		specObject.Meta["dbAlias"] = dbAlias
+		specObject.Meta["id"] = fmt.Sprintf("%s-config", dbAlias)
 
-		specObject.Spec.(map[string]interface{})["name"] = req.To.DBName
-		specObject.Spec.(map[string]interface{})["conn"] = req.To.Conn
+		// override the db config provided in the request
+		for key, value := range req.To {
+			specObject.Spec.(map[string]interface{})[key] = value
+		}
 		specArr = append(specArr, specObject)
 	}
 	helpers.Logger.LogInfo(helpers.GetRequestID(ctx), fmt.Sprintf("Successfully fetched database config having db alias (%s))", req.From), nil)
@@ -33,7 +34,7 @@ func SyncDatabase(ctx context.Context, token string, req *model.DBSyncRequest) e
 		return err
 	}
 	for _, specObject := range specObjs {
-		specObject.Meta["dbAlias"] = req.To.DbAlias
+		specObject.Meta["dbAlias"] = dbAlias
 		specArr = append(specArr, specObject)
 	}
 	helpers.Logger.LogInfo(helpers.GetRequestID(ctx), fmt.Sprintf("Successfully fetched database schemas, total count (%d)))", len(specObjs)), nil)
@@ -43,7 +44,7 @@ func SyncDatabase(ctx context.Context, token string, req *model.DBSyncRequest) e
 		return err
 	}
 	for _, specObject := range specObjs {
-		specObject.Meta["dbAlias"] = req.To.DbAlias
+		specObject.Meta["dbAlias"] = dbAlias
 		specArr = append(specArr, specObject)
 	}
 	helpers.Logger.LogInfo(helpers.GetRequestID(ctx), fmt.Sprintf("Successfully fetched database rules, total count (%d)))", len(specObjs)), nil)
@@ -53,13 +54,13 @@ func SyncDatabase(ctx context.Context, token string, req *model.DBSyncRequest) e
 		return err
 	}
 	for _, specObject := range specObjs {
-		specObject.Meta["dbAlias"] = req.To.DbAlias
-		specObject.Meta["db"] = req.To.DbAlias
+		specObject.Meta["dbAlias"] = dbAlias
+		specObject.Meta["db"] = dbAlias
 		specArr = append(specArr, specObject)
 	}
 	helpers.Logger.LogInfo(helpers.GetRequestID(ctx), fmt.Sprintf("Successfully fetched database prepared query, total count (%d)))", len(specObjs)), nil)
 
-	if err := MakeHTTPRequest(token, http.MethodPost, fmt.Sprintf("%s/v1/config/batch-apply", model.GatewayAddr), map[string]string{}, map[string]interface{}{"specs": specArr}, new(map[string]interface{})); err != nil {
+	if err := MakeHTTPRequest(token, http.MethodPost, "/v1/config/batch-apply", map[string]string{}, map[string]interface{}{"specs": specArr}, new(map[string]interface{})); err != nil {
 		return err
 	}
 	return nil
